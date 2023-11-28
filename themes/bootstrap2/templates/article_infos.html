@@ -1,0 +1,89 @@
+<footer class="post-info">
+<!-- <span class="label">Date</span>
+<abbr class="published" title="{{ article.date.isoformat() }}">
+        <i class="icon-calendar"></i>{{ article.locale_date }}
+</abbr> -->
+<p>
+        <span class="label" id="title_label">Title</span>
+        <a href="{{ SITEURL }}/{{ article.url }}" id="article_url"><i><nobr id="article_title">{{ article.title }}</nobr></i></a>
+</p>
+<span class="label">By</span>
+{% if article.authors %}
+        {% for author in article.authors %}
+                <a href="{{ SITEURL }}/{{ author.url }}">
+                        <i class="icon-user"></i>
+                        <nobr>{{ author }}</nobr>
+                </a>
+        {% endfor %}
+{% elif article.author %}
+        <a href="{{ SITEURL }}/{{ article.author.url }}">
+                <i class="icon-user"></i>
+                <nobr>{{ article.author }}</nobr>
+        </a>
+{% endif %}
+<span class="label">Year</span>
+<a class="published" title="{{ article.year }}"><i class="icon-calendar"></i>{{ article.year }}</a>
+<span class="label">Added</span>
+<a class="published" title="{{ article.date.isoformat() }}"><i class="icon-calendar"></i>{{ article.locale_date }}</a>
+{% if article.journal %}
+        <span class="label">Journal</span>
+        {{ article.journal }}
+{% endif %}
+{% if article.booktitle %}
+        <span class="label">Booktitle</span>
+        {{ article.booktitle }}
+{% endif %}
+{% if article.thedoiurl or article.theurl %}
+        <span class="label">URL</span>
+        {% if article.thedoiurl %}
+                <a href="{{ article.thedoiurl }}" target="_blank">[doi]</a>
+        {% endif %}
+        {% if article.theurl %}
+                <a href="{{ article.theurl }}" target="_blank">[url]</a>
+        {% endif %}
+{% endif %}
+<!-- <span class="label">Key</span> -->
+<a hidden><nobr>{{ article.key }}</nobr></a>
+{% if article.pdffiles or article.pdffile %}
+        <span class="label" id="PDF_label">PDF</span>
+        {% if article.pdffiles %}
+                {% for pdffile in article.pdffiles %}
+                [<a href="{{ GITHUB_VIEW_URL }}/{{ pdffile | urlencode }}" target="_blank">pdf</a> | <a href="pdfefile:///SyncedFolders/librarian/{{ pdffile | replace('./', '', 1) }}">pdfe</a>]
+                {% endfor %}
+        {% elif article.pdffile %}
+                [<a href="{{ GITHUB_VIEW_URL }}/{{ article.pdffile | urlencode }}" target="_blank">pdf</a> | <a href="pdfefile:///SyncedFolders/librarian/{{ article.pdffile  | replace('./', '', 1) }}">pdfe</a>]
+        {% endif %}
+{% endif %}
+{% if article.epubfiles or article.epubfile %}
+        <span class="label" id="EPUB_label">EPUB</span>
+        {% if article.epubfiles %}
+                {% for epubfile in article.epubfiles %}
+                [<a href="{{ GITHUB_VIEW_URL }}/{{ epubfile | urlencode }}" target="_blank">epub</a>]
+                {% endfor %}
+        {% elif article.epubfile %}
+                [<a href="{{ GITHUB_VIEW_URL }}/{{ article.epubfile | urlencode }}" target="_blank">epub</a>]
+        {% endif %}
+{% endif %}
+{% if article.djvufiles or article.djvufile %}
+        <span class="label" id="DJVU_label">DJVU</span>
+        {% if article.djvufiles %}
+                {% for djvufile in article.djvufiles %}
+                [<a href="{{ GITHUB_VIEW_URL }}/{{ djvufile | urlencode }}" target="_blank">djvu</a>]
+                {% endfor %}
+        {% elif article.djvufile %}
+                [<a href="{{ GITHUB_VIEW_URL }}/{{ article.djvufile | urlencode }}" target="_blank">djvu</a>]
+        {% endif %}
+{% endif %}
+<span class="label">BIB</span>
+        <a href="javascript:copyBib()">[copy]</a>
+        {% if article.doi %}
+                <a href="{{ SITEURL }}/doi/{{ article.doi }}" target="_blank">[cite]</a>
+        {% endif %}
+        <!-- <a href="{{ SITEURL }}/{{ article.bibfile }}">[bib]</a> -->
+        <a href="{{ GITHUB_EDIT_URL }}/{{ article.bibfile }}" target="_blank">[edit]</a>
+<span class="label">SRC</span>
+        <a href="{{ GITHUB_EDIT_URL }}/{{ article.rootfolder }}" id="article_rootfolder" target="_blank">[edit]</a>
+</footer>
+<span class="label">FILES</span>
+        <a href="http://172.28.1.15:4444/filebrowser/files/Media/Library/librarian/{{ article.rootfolder }}" id="article_filebrowser" target="_blank">[open]</a>
+</footer>

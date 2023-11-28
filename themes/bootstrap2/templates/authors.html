@@ -1,0 +1,13 @@
+{% extends "index2.html" %}
+{% block content %}
+<section id="content">
+<h1>Authors</h1>
+<ul>
+    {% for author, articles in authors | sort %}
+    <li>
+        <a href="{{ SITEURL }}/{{ author.url }}"><i class="icon-user"></i>{{ author }}</a>
+    </li>
+    {% endfor %}
+</ul>
+</section>
+{% endblock %}
