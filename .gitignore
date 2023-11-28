@@ -1,0 +1,22 @@
+output
+pelicanconf_local.py
+*.lst
+*.err
+*.log
+
+books.bib
+books.bib.keys
+books.bib.new.bib
+
+#Python
+*.py[cod]
+
+# Installer logs
+pip-log.txt
+
+.DS_Store
+._*
+library/*.md
+docs
+__pycache__
+skim/
