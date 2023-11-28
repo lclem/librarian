@@ -36,7 +36,7 @@ for LINE in ${MODIFIED_FILES}; do
       git pull
       git commit -m "${COMMIT_MESSAGE} #${n}"
       git push origin
-      #git reset HEAD
+      git reset HEAD
       (( i = 1 ))
       (( n = n + 1 ))
     fi
