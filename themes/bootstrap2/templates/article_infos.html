@@ -48,10 +48,10 @@
         <span class="label" id="PDF_label">PDF</span>
         {% if article.pdffiles %}
                 {% for pdffile in article.pdffiles %}
-                [<a href="{{ GITHUB_VIEW_URL }}/{{ pdffile | urlencode }}" target="_blank">pdf</a> | <a href="pdfefile:///SyncedFolders/librarian/{{ pdffile | replace('./', '', 1) }}">pdfe</a>]
+                [<a href="{{ GITHUB_VIEW_URL }}/{{ pdffile | urlencode }}" target="_blank">pdf</a> | <a href="pdfefile:///SyncedFolders/librarian/{{ pdffile | replace('./', '', 1) | urlencode }}">pdfe</a>]
                 {% endfor %}
         {% elif article.pdffile %}
-                [<a href="{{ GITHUB_VIEW_URL }}/{{ article.pdffile | urlencode }}" target="_blank">pdf</a> | <a href="pdfefile:///SyncedFolders/librarian/{{ article.pdffile  | replace('./', '', 1) }}">pdfe</a>]
+                [<a href="{{ GITHUB_VIEW_URL }}/{{ article.pdffile | urlencode }}" target="_blank">pdf</a> | <a href="pdfefile:///SyncedFolders/librarian/{{ article.pdffile  | replace('./', '', 1) | urlencode }}">pdfe</a>]
         {% endif %}
 {% endif %}
 {% if article.epubfiles or article.epubfile %}
