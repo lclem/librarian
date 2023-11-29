@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Set the desired commit message
-COMMIT_MESSAGE="Batch 4th commit"
+COMMIT_MESSAGE="Batch 5th commit"
 
 # Specify the number of files to process in each batch
 BATCH_SIZE=10
