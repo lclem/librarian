@@ -192,10 +192,11 @@
       function sanitiseKey(key) {
 
         newKey = key.replaceAll("/", "_");
-        // newKey = newKey.replaceAll(":", "_");
+        newKey = newKey.replaceAll(":", "_");
         console.log("sanitising key " + key + " --> " + newKey);
 
         return newKey;
+	      
       }
 
       // TODO: check that the key does not exist already in the repo
