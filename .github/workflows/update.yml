@@ -7,6 +7,10 @@ on:
     branches: [ main ]
   workflow_dispatch:
 
+concurrency:
+  group: "repo"
+  cancel-in-progress: false
+
 jobs:
   library_update:
     runs-on: ubuntu-latest
