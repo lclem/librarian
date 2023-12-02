@@ -92,7 +92,7 @@ var globalBibStr = "";
 
 function confirmBib() {
   statusAppend("bib confirmed: " + globalBibStr);
-  uploadBib(globalBibStr, true);
+  processBib(globalBibStr, "", true);
 }
 
 window.confirmBib = confirmBib;
@@ -177,28 +177,23 @@ async function processBib(aBibStr, fileName, force = false) {
 async function uploadBib(bibFile, force = false) {
   console.log("uploadBib: " + bibFile + ", force: " + force);
 
-  if (force) {
-    processBib(bibFile, "", force);
-  }
-  else {
-    let fileName = "";
+  let fileName = "";
+  
+  var reader = new FileReader();
+  reader.readAsText(bibFile, "UTF-8");
+  reader.onload = function (evt) {
+    var bibStr = evt.target.result;
+
+    if (bibFile.name !== null) {
+      fileName = bibFile.name;
+    }
     
-    var reader = new FileReader();
-    reader.readAsText(bibFile, "UTF-8");
-    reader.onload = function (evt) {
-      var bibStr = evt.target.result;
+    console.log("File name: " + fileName);
+    processBib(bibStr, fileName, force);
 
-      if (bibFile.name !== null) {
-        fileName = bibFile.name;
-      }
-      
-      console.log("File name: " + fileName);
-      processBib(bibStr, fileName, force);
-
-    }
-    reader.onerror = function (evt) {
-      console.log("error reading file");
-    }
+  }
+  reader.onerror = function (evt) {
+    console.log("error reading file");
   }
 }
 
