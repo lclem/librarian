@@ -73,7 +73,7 @@ export function sanitiseKey(key) {
 }
 
 // get bib information given the doi
-async function doi2bib(doiUrl, callback) {
+export async function doi2bib(doiUrl, callback) {
 
   statusAppend("doi: " + doiUrl);
 
