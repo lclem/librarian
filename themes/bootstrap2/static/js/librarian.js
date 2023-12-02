@@ -64,7 +64,12 @@ function handleDrop(e) {
   if (fileName.endsWith(".bib") || fileName.endsWith(".txt")) {
     uploadBib(dt);
   }
-  else if (fileName.endsWith(".pdf") || fileName.endsWith(".epub") || fileName.endsWith(".mobi")) {
+  else if (
+    fileName.endsWith(".pdf") ||
+    fileName.endsWith(".epub") ||
+    fileName.endsWith(".mobi") ||
+    fileName.endsWith(".azw3")   
+    ) {
     uploadFile(theFile);
   }
   else {
