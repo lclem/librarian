@@ -3,7 +3,6 @@ import { statusAppend } from './util.js';
 let addButton = document.getElementById('add-button');
 var stork_input = document.getElementById('stork-input');
 let dropArea = document.getElementById('drop-area');
-let status = document.getElementById('status');
 let dt = [];
 let bibStr = "";
 
