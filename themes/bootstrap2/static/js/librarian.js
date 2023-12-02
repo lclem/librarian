@@ -91,6 +91,7 @@ function outFunc() {
 var globalBibStr = "";
 
 function confirmBib() {
+  statusAppend("bib confirmed: " + globalBibStr);
   uploadBib(globalBibStr, true);
 }
 
