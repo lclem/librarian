@@ -19,6 +19,11 @@
     <link rel="stylesheet" href="{{ SITEURL }}/theme/css/custom.css" type="text/css" />
     <link rel="stylesheet" href="{{ SITEURL }}/theme/css/stork-basic.css" />
 
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ SITEURL }}/theme/img/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ SITEURL }}/theme/img/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ SITEURL }}/theme/img/favicon-16x16.png">
+    <link rel="manifest" href="{{ SITEURL }}/theme/img/site.webmanifest">
+
     <link href="{{ SITEURL }}/theme/css/bootstrap-responsive.min.css" rel="stylesheet">
     <link href="{{ SITEURL }}/theme/css/font-awesome.css" rel="stylesheet">
     <link href="{{ SITEURL }}/theme/css/pygments.css" rel="stylesheet">
@@ -87,7 +92,9 @@
 
     <script src="{{ SITEURL }}/theme/js/jquery-1.7.2.min.js"></script>
     <script src="{{ SITEURL }}/theme/js/bootstrap.min.js"></script>
-    <script src="{{ SITEURL }}/theme/js/bibtexParse.js"></script>
+    <script src="{{ SITEURL }}/theme/js/bibtexParse.js">
+      window.bibtexParse = bibtexParse;
+    </script>
     <script src="{{ SITEURL }}/theme/js/pdf.js"></script>
     <script> pdfjsLib.GlobalWorkerOptions.workerSrc = '{{ SITEURL }}/theme/js/pdf.worker.js';</script>
 

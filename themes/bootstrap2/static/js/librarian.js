@@ -1,4 +1,7 @@
 import { statusAppend } from './util.js';
+// import "./bibtexParse.js";
+
+//{toBibtex, toJSON}
 
 let addButton = document.getElementById('add-button');
 var stork_input = document.getElementById('stork-input');
