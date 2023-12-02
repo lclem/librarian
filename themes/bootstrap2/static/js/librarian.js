@@ -1,5 +1,4 @@
 import { statusAppend } from './util.js';
-let val = hello();  // val is "Hello";
 
 let addButton = document.getElementById('add-button');
 var stork_input = document.getElementById('stork-input');
