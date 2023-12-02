@@ -1,8 +1,5 @@
-import { statusAppend, sanitiseKey, lowerize, isDoi, toBase64 } from './util.js';
+import { statusAppend, sanitiseKey, lowerize, isDoi, storkInit } from './util.js';
 import { openGitHub, uploadFile } from './github.js';
-// import "./bibtexParse.js";
-
-//{toBibtex, toJSON}
 
 let addButton = document.getElementById('add-button');
 var stork_input = document.getElementById('stork-input');
@@ -12,19 +9,6 @@ let bibStr = "";
 
 var bibFile;
 
-async function storkInit(siteurl) {
-		stork.initialize(siteurl + "/theme/js/stork-1.6/stork.wasm");
-		const options = {showScores: false};
-		
-		const deferred = async function() {
-      stork.register("sitesearch", siteurl + "/search-index.st", options);
-      console.log("stork initialised");
-      };
-		
-		deferred();
-}
-
-// export the function
 window.storkInit = storkInit;
 
 stork_input.addEventListener("change", updateSearch, false);
