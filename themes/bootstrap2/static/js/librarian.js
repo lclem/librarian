@@ -92,6 +92,8 @@ function confirmBib() {
   uploadBib(dt, true);
 }
 
+window.confirmBib = confirmBib;
+
 async function processBib(aBibStr, fileName, force = false) {
 
   var bibStr = aBibStr.trim();
