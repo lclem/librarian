@@ -58,8 +58,8 @@ function handleDrop(e) {
   //   return;
   // }
 
-  var i = 0;
-  for (theFile in dt.files) {
+  for (var i = 0; i < len; ++i) {
+    var theFile = dt.files[i];
     var fileName = theFile.name;
 
     statusAppend("processing dropped file #" + i + ": " + fileName);
@@ -78,8 +78,6 @@ function handleDrop(e) {
     else {
       console.log("unsupported format: " + fileName);
     }
-
-    i = i + 1;
   }
 }
 
