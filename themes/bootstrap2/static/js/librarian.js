@@ -158,7 +158,7 @@ async function processBib(aBibStr, fileName, force = false) {
         bibStr = bibStr.trim();
         console.log(bibStr);
 
-        var url = openGitHub(key, fileName, bibStr);
+        var url = openGitHub("librarian", key, fileName, bibStr);
         addButton.style.display = "none";
       
       }

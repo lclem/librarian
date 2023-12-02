@@ -9,7 +9,7 @@ const octokit = new Octokit({ auth: pat });
 console.log("Octokit loaded");
 
 // TODO: check that the key does not exist already in the repo
-export async function openGitHub(key, fileName, bibStr) {
+export async function openGitHub(repository, key, fileName, bibStr) {
 
   var sanitisedKey = sanitiseKey(key);
   
@@ -18,7 +18,7 @@ export async function openGitHub(key, fileName, bibStr) {
     fileName = sanitisedKey + ".bib";
   }
 
-  var url = "https://github.com/lclem/librarian/new/main/library/entries/";
+  var url = "https://github.com/lclem/" + repository + "/new/main/library/entries/";
   url += sanitisedKey + "?filename=" + fileName + "&value=";
   url += encodeURIComponent(bibStr);
 
