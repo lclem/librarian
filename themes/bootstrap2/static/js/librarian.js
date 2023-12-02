@@ -88,8 +88,10 @@ function outFunc() {
   tooltip.innerHTML = "Copy to clipboard";
 }
 
+var globalBibStr = "";
+
 function confirmBib() {
-  uploadBib(dt, true);
+  uploadBib(globalBibStr, true);
 }
 
 window.confirmBib = confirmBib;
@@ -97,6 +99,7 @@ window.confirmBib = confirmBib;
 async function processBib(aBibStr, fileName, force = false) {
 
   var bibStr = aBibStr.trim();
+  globalBibStr = bibStr;
   console.log("processBib: " + bibStr);
   statusAppend("processing bib: " + bibStr);
 
