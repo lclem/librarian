@@ -178,7 +178,7 @@ async function uploadBib(bibFile, force = false) {
   console.log("uploadBib: " + bibFile + ", force: " + force);
 
   if (force) {
-    processBib(bibStr, "", force);
+    processBib(bibFile, "", force);
   }
   else {
     let fileName = "";
