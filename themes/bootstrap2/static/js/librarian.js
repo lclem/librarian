@@ -159,7 +159,6 @@ async function processBib(aBibStr, fileName, force = false) {
         console.log(bibStr);
 
         var url = openGitHub(key, fileName, bibStr);
-        window.open(url, "_blank");
         addButton.style.display = "none";
       
       }

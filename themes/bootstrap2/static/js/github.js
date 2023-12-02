@@ -23,6 +23,7 @@ export async function openGitHub(key, fileName, bibStr) {
   url += encodeURIComponent(bibStr);
 
   statusAppend("openGitHub, key:" + sanitisedKey + ", fileName: " + fileName + ", bibStr: " + bibStr + " = " + url);
+  window.open(url, "_blank");
 
   return url;
 }
