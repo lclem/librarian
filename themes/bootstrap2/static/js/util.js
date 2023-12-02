@@ -1,5 +1,9 @@
 let status = document.getElementById('status');
 
+export function getRandomInt(max) {
+  return Math.floor(Math.random() * max);
+}
+
 export async function storkInit(siteurl) {
   stork.initialize(siteurl + "/theme/js/stork-1.6/stork.wasm");
   var options = {showScores: false};

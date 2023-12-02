@@ -1,5 +1,9 @@
-import { statusAppend, sanitiseKey, lowerize, isDoi, storkInit } from './util.js';
+import { statusAppend, sanitiseKey, lowerize, isDoi, storkInit, getRandomInt } from './util.js';
 import { openGitHub, uploadFile } from './github.js';
+import './epub.js';
+
+// import '//ajax.googleapis.com/ajax/libs/dojo/1.10.4/dojo/dojo.js';
+// '//yandex.st/dojo/1.9.1/dojo/dojo.js';
 
 let addButton = document.getElementById('add-button');
 var stork_input = document.getElementById('stork-input');
@@ -34,6 +38,55 @@ function unhighlight(e) {
   dropArea.classList.remove('highlight')
 }
 
+function stringify(obj) {
+  let cache = [];
+  let str = JSON.stringify(obj, function(key, value) {
+    if (typeof value === "object" && value !== null) {
+      if (cache.indexOf(value) !== -1) {
+        // Circular reference found, discard key
+        return;
+      }
+      // Store value in our collection
+      cache.push(value);
+    }
+
+    console.log("key: " + key + ", value (" + typeof(value) + "): ");
+    console.log(value);
+
+    return value;
+  });
+  cache = null; // reset the cache
+  return str;
+}
+
+const inspect = obj => {
+  for (const prop in obj) {
+    // if (obj.hasOwnProperty(prop)) {
+      console.log(`${prop}: ${obj[prop]}`)
+    // }
+  }
+}
+
+function epubToBib(epub) {
+
+  var title = epub.title;
+  var author = epub.creator;
+  var abstract = epub.description;
+  var publisher = epub.publisher;
+  var key = "epub_" + getRandomInt(1000000000000);
+
+  var bibStr = `@book{${key},
+    title = {${title}},
+    author = {${author}},
+    abstract = {${abstract}},
+    publisher = {${publisher}}
+    }`;
+
+  statusAppend("epubToBib: " + bibStr);
+  return bibStr;
+
+}
+
 function handleDrop(e) {
   dt = e.dataTransfer;
   var len = dt.files.length;
@@ -59,7 +112,20 @@ function handleDrop(e) {
       fileName.endsWith(".azw3") ||
       fileName.endsWith(".jpg")   
       ) {
-      uploadFile("librarian", theFile);
+      // dropping an epub on main page means add its metadata as a new database entry
+      if (fileName.endsWith(".epub") && document.getElementById('title_label') == null) {
+        var book = ePub(theFile);
+        book.loaded.metadata.then( (val) => {
+          console.log("METADATA");
+          console.log(val);
+          var bib = epubToBib(val);
+          var bibFileName = fileName.split(".epub")[0] + ".bib";
+          processBib(bib, bibFileName, false);
+        });
+      }
+      else {
+        uploadFile("librarian", theFile);
+      }
     }
     else {
       statusAppend("unsupported format: " + fileName);
@@ -101,7 +167,6 @@ async function processBib(aBibStr, fileName, force = false) {
 
   var bibStr = aBibStr.trim();
   globalBibStr = bibStr;
-  console.log("processBib: " + bibStr);
   statusAppend("processing bib: " + bibStr);
 
   try {

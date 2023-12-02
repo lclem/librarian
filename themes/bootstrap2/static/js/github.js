@@ -35,7 +35,7 @@ export async function uploadFile(repository, theFile) {
 
   // if we are on an article page,
   // dropping a file means "add this PDF to this entry"
-  if(document.getElementById('title_label') != null){
+  if(document.getElementById('title_label') != null) {
 
     const articleUrl = document.getElementById('article_url');
     console.log("file dropped on article page, url: " + articleUrl);

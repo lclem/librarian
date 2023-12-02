@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <title>{% block title %}{{ SITENAME }}{% endblock %}</title>
 
-<!-- 	  script-src 'wasm-unsafe-eval' 'wasm-eval'; object-src 'none'; -->
+    <!-- script-src 'wasm-unsafe-eval' 'wasm-eval'; object-src 'none'; -->
     <meta http-equiv="content-security-policy" content=""/>
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -88,18 +88,20 @@
           </p>      
         </div>
       </div>
-  </div>
 
-    <script src="{{ SITEURL }}/theme/js/jquery-1.7.2.min.js"></script>
-    <script src="{{ SITEURL }}/theme/js/bootstrap.min.js"></script>
-    <script src="{{ SITEURL }}/theme/js/bibtexParse.js">
-      window.bibtexParse = bibtexParse;
-    </script>
-    <script src="{{ SITEURL }}/theme/js/pdf.js"></script>
-    <script> pdfjsLib.GlobalWorkerOptions.workerSrc = '{{ SITEURL }}/theme/js/pdf.worker.js';</script>
+  <div id="epub_area"></div>
 
-    <script type="module" src="{{ SITEURL }}/theme/js/librarian.js"></script>	  
-    <script defer src="{{ SITEURL }}/theme/js/stork-1.6/stork.js" onload="storkInit('{{ SITEURL }}')"></script>
+  <script src="{{ SITEURL }}/theme/js/jquery-1.7.2.min.js"></script>
+  <script src="{{ SITEURL }}/theme/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.5/jszip.min.js"></script>
+  <script src="{{ SITEURL }}/theme/js/bibtexParse.js">
+    window.bibtexParse = bibtexParse;
+  </script>
+  <script src="{{ SITEURL }}/theme/js/pdf.js"></script>
+  <script> pdfjsLib.GlobalWorkerOptions.workerSrc = '{{ SITEURL }}/theme/js/pdf.worker.js';</script>
+
+  <script type="module" src="{{ SITEURL }}/theme/js/librarian.js"></script>	  
+  <script defer src="{{ SITEURL }}/theme/js/stork-1.6/stork.js" onload="storkInit('{{ SITEURL }}')"></script>
     
   </body>
 </html>
