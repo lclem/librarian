@@ -48,8 +48,8 @@ function handleDrop(e) {
   if (fileName.endsWith(".bib") || fileName.endsWith(".txt")) {
     uploadBib(dt);
   }
-  else if (fileName.endsWith(".pdf")) {
-    uploadPdf(theFile);
+  else if (fileName.endsWith(".pdf") || fileName.endsWith(".epub") || fileName.endsWith(".mobi")) {
+    uploadFile(theFile);
   }
   else {
     console.log("unsupported format: " + fileName);
@@ -299,24 +299,20 @@ const toBase64 = file => new Promise((resolve, reject) => {
   reader.onerror = reject;
 });
 
-// TODO: if we are creating a new bib entry,
-// then also automatically add the dropped pdf to the corresponding git folder
+async function uploadFile(theFile) {
 
-async function uploadPdf(thePdf) {
-
-  console.log(thePdf);
-  var fileName = thePdf.name;
+  console.log(theFile);
+  var fileName = theFile.name;
 
   // if we are on an article page,
-  // dropping a PDF means "add this PDF to this entry"
-  if(document.getElementById('title_label') != null){ // && document.getElementById('PDF_label') == null) {
+  // dropping a file means "add this PDF to this entry"
+  if(document.getElementById('title_label') != null){
 
     const articleUrl = document.getElementById('article_url');
-    console.log("PDF dropped on article page, url: " + articleUrl);
+    console.log("file dropped on article page, url: " + articleUrl);
 
-    pdfContents = await toBase64(thePdf);
-    pdfContents = pdfContents.slice(pdfContents.indexOf(",") + 1);
-    // console.log("pdfContents: " + pdfContents);
+    fileContents = await toBase64(theFile);
+    fileContents = fileContents.slice(fileContents.indexOf(",") + 1);
 
     var rootFolder = document.getElementById('article_rootfolder').getAttribute("href");
     console.log("rootFolder: " + rootFolder);
@@ -331,12 +327,12 @@ async function uploadPdf(thePdf) {
       owner: 'lclem',
       repo: 'librarian',
       path: fileName,
-      message: 'PDF upload',
+      message: 'file upload',
       committer: {
         name: 'Lorenzo C',
         email: 'clementelorenzo@gmail.com'
       },
-      content: pdfContents,
+      content: fileContents,
       headers: {
         'X-GitHub-Api-Version': '2022-11-28'
       }
