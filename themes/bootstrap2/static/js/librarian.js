@@ -77,7 +77,7 @@ function handleDrop(e) {
       uploadFile(theFile);
     }
     else {
-      console.log("unsupported format: " + fileName);
+      statusAppend("unsupported format: " + fileName);
     }
   }
 }
