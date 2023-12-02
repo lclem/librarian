@@ -71,7 +71,8 @@ function handleDrop(e) {
       fileName.endsWith(".pdf") ||
       fileName.endsWith(".epub") ||
       fileName.endsWith(".mobi") ||
-      fileName.endsWith(".azw3")   
+      fileName.endsWith(".azw3") ||
+      fileName.endsWith(".jpg")   
       ) {
       uploadFile(theFile);
     }
