@@ -53,27 +53,33 @@ function handleDrop(e) {
   dt = e.dataTransfer;
   var len = dt.files.length;
 
-  if (len != 1) {
-    console.log("not supported: dropped files #" + len);
-    return;
-  }
+  // if (len != 1) {
+  //   console.log("not supported: dropped files #" + len);
+  //   return;
+  // }
 
-  var theFile = dt.files[0];
-  var fileName = theFile.name;
+  var i = 0;
+  for (theFile in dt.files) {
+    var fileName = theFile.name;
 
-  if (fileName.endsWith(".bib") || fileName.endsWith(".txt")) {
-    uploadBib(dt);
-  }
-  else if (
-    fileName.endsWith(".pdf") ||
-    fileName.endsWith(".epub") ||
-    fileName.endsWith(".mobi") ||
-    fileName.endsWith(".azw3")   
-    ) {
-    uploadFile(theFile);
-  }
-  else {
-    console.log("unsupported format: " + fileName);
+    statusAppend("processing dropped file #" + i + ": " + fileName);
+
+    if (fileName.endsWith(".bib") || fileName.endsWith(".txt") || fileName.endsWith(".rst")) {
+      uploadBib(theFile);
+    }
+    else if (
+      fileName.endsWith(".pdf") ||
+      fileName.endsWith(".epub") ||
+      fileName.endsWith(".mobi") ||
+      fileName.endsWith(".azw3")   
+      ) {
+      uploadFile(theFile);
+    }
+    else {
+      console.log("unsupported format: " + fileName);
+    }
+
+    i = i + 1;
   }
 }
 
@@ -219,15 +225,13 @@ async function processBib(aBibStr, fileName, force = false) {
   }
 }
 
-async function uploadBib(inp, force = false) {
-  console.log("uploadBib: " + inp + ", force: " + force);
+async function uploadBib(bibFile, force = false) {
+  console.log("uploadBib: " + bibFile + ", force: " + force);
 
   if (force) {
     processBib(bibStr, "", force);
   }
   else {
-    var bibFile = inp.files[0];
-
     let fileName = "";
     
     var reader = new FileReader();
