@@ -106,7 +106,7 @@ function confirmBib() {
 // TODO: improve
 function sanitiseKey(key) {
 
-  newKey = key.replaceAll("/", "_");
+  var newKey = key.replaceAll("/", "_");
   newKey = newKey.replaceAll(":", "_");
   console.log("sanitising key " + key + " --> " + newKey);
 
@@ -117,14 +117,14 @@ function sanitiseKey(key) {
 // TODO: check that the key does not exist already in the repo
 async function openGitHub(key, fileName, bibStr) {
 
-  sanitisedKey = sanitiseKey(key);
+  var sanitisedKey = sanitiseKey(key);
   
   // create filename from key if not present
   if (fileName == "") {
     fileName = sanitisedKey + ".bib";
   }
 
-  url = "https://github.com/lclem/librarian/new/main/library/entries/";
+  var url = "https://github.com/lclem/librarian/new/main/library/entries/";
   url += sanitisedKey + "?filename=" + fileName + "&value=";
   url += encodeURIComponent(bibStr);
 
@@ -161,6 +161,8 @@ async function processBib(aBibStr, fileName, force = false) {
       bibJSON.entryTags = lowerize(bibJSON.entryTags);
       var tags = bibJSON.entryTags;
       console.log("tags: " + JSON.stringify(tags));
+
+      var title = "";
 
       if ("title" in tags) {
         title = tags["title"];
@@ -200,7 +202,7 @@ async function processBib(aBibStr, fileName, force = false) {
         bibJSON.entryTags["date-added"] = datetime;
         console.log(datetime);
         
-        bibStr = bibtexParse.toBibtex([bibJSON], false);
+        var bibStr = bibtexParse.toBibtex([bibJSON], false);
         bibStr = bibStr.trim();
         console.log(bibStr);
 
@@ -219,14 +221,14 @@ async function uploadBib(inp, force = false) {
     processBib(bibStr, "", force);
   }
   else {
-    bibFile = inp.files[0];
+    var bibFile = inp.files[0];
 
     let fileName = "";
     
     var reader = new FileReader();
     reader.readAsText(bibFile, "UTF-8");
     reader.onload = function (evt) {
-      bibStr = evt.target.result;
+      var bibStr = evt.target.result;
 
       if (bibFile.name !== null) {
         fileName = bibFile.name;
@@ -258,7 +260,7 @@ async function getWebPage(theUrl, callback) {
 
   statusAppend("getting url: " + theUrl);
 
-  xmlhttp = getXmlHttp();
+  var xmlhttp = getXmlHttp();
   xmlhttp.onreadystatechange = async function() {
     if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
       let res = xmlhttp.responseText;
@@ -332,7 +334,7 @@ async function uploadFile(theFile) {
 
     var rootFolder = document.getElementById('article_rootfolder').getAttribute("href");
     console.log("rootFolder: " + rootFolder);
-    path = "library/entries/" + rootFolder.split("/").slice(-1) + "/";
+    var path = "library/entries/" + rootFolder.split("/").slice(-1) + "/";
 
     var fileName = encodeURIComponent(fileName);
     const putRequest = 'PUT /repos/lclem/librarian/contents/' + path + fileName;
