@@ -1,11 +1,16 @@
 #!/bin/bash
 
+SECONDS=0
 echo "starting builder"
 
-ls -la
-
 echo "starting indexer"
-python3 ./scripts/indexer.py
+python3 ./scripts/indexer.py > /dev/null
 
 echo "starting pelican"
 pelican
+
+echo "compute library size"
+du -hs ./runner | cut -d'.' -f1 > > ./docs/size.txt
+
+duration=$SECONDS
+echo "$(($duration / 60))m$(($duration % 60))s" > ./docs/elapsed.txt
