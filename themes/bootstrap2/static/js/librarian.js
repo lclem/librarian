@@ -142,24 +142,24 @@ const lowerize = obj =>
 
 async function processBib(aBibStr, fileName, force = false) {
 
-  bibStr = aBibStr.trim();
+  var bibStr = aBibStr.trim();
   console.log("processBib: " + bibStr);
   statusAppend("processing bib: " + bibStr);
 
   try {
-    bibJSONs = bibtexParse.toJSON(bibStr);
+    var bibJSONs = bibtexParse.toJSON(bibStr);
 
     for (bibJSON of bibJSONs) {
       console.log(bibJSON);
 
-      key = bibJSON.citationKey;
+      var key = bibJSON.citationKey;
       console.log("key: " + key);
 
-      sanitisedKey = sanitiseKey(key);
+      var sanitisedKey = sanitiseKey(key);
       bibJSON.citationKey = sanitisedKey;
 
       bibJSON.entryTags = lowerize(bibJSON.entryTags);
-      tags = bibJSON.entryTags;
+      var tags = bibJSON.entryTags;
       console.log("tags: " + JSON.stringify(tags));
 
       if ("title" in tags) {
@@ -327,15 +327,15 @@ async function uploadFile(theFile) {
     const articleUrl = document.getElementById('article_url');
     console.log("file dropped on article page, url: " + articleUrl);
 
-    fileContents = await toBase64(theFile);
+    var fileContents = await toBase64(theFile);
     fileContents = fileContents.slice(fileContents.indexOf(",") + 1);
 
     var rootFolder = document.getElementById('article_rootfolder').getAttribute("href");
     console.log("rootFolder: " + rootFolder);
     path = "library/entries/" + rootFolder.split("/").slice(-1) + "/";
 
-    fileName = encodeURIComponent(fileName);
-    putRequest = 'PUT /repos/lclem/librarian/contents/' + path + fileName;
+    var fileName = encodeURIComponent(fileName);
+    const putRequest = 'PUT /repos/lclem/librarian/contents/' + path + fileName;
     statusAppend("put request: " + putRequest);
 
     const result = await octokit.request(putRequest, {
@@ -357,7 +357,7 @@ async function uploadFile(theFile) {
     console.log(result.data);
     window.open(rootFolder, "_blank");
     
-    commitUrl = result.data.commit.html_url;
+    const commitUrl = result.data.commit.html_url;
     statusAppend(commitUrl);
   }
 }
