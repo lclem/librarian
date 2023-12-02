@@ -159,13 +159,15 @@ def parsebib(bibFile):
         date_added = getValue(fields, 'date-added', "")
         date_modified = getValue(fields, 'date-modified', "")
 
+        volume = getValue(fields, 'volume', "")
+
         url = getValue(fields, 'url', "")
         doi = getValue(fields, 'doi', "")
 
         if doi != "" and not doi.startswith("http"):
             doi = mkDoiUrl(doi)
 
-        result.append((entry, key, authors, title, year, date_added, date_modified, doi, url))
+        result.append((entry, key, authors, title, year, volume, date_added, date_modified, doi, url))
 
     return result
 
@@ -207,7 +209,7 @@ for root, dirs, files in os.walk("./library/entries"):
 
                         for bibEntry in parseResults:
 
-                            entry, key, authors, title, year, date_added, date_modified, doi, url = bibEntry
+                            entry, key, authors, title, year, volume, date_added, date_modified, doi, url = bibEntry
                             print(f"BIB {authors} - {title}")
 
                             doiNoURL = doi
@@ -264,6 +266,7 @@ Authors: {'; '.join(authors)}\n\
 Rootfolder: {cwd}\n\
 Bibfile: {os.path.join(cwd, bibFile)}\n\
 Mdfile: {os.path.join(cwd, mdfile)}\n\
+{'Volume: ' + volume + NEWLINE if volume != '' else ''}\
 {'Date: ' + date_added + NEWLINE if date_added != '' else ''}\
 {'Modified: ' + date_modified + NEWLINE if date_modified != '' else ''}\
 {'thedoiurl: ' + doi + NEWLINE if doi != '' else ''}\
