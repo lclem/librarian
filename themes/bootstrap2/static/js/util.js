@@ -1,5 +1,17 @@
 let status = document.getElementById('status');
 
+export async function storkInit(siteurl) {
+  stork.initialize(siteurl + "/theme/js/stork-1.6/stork.wasm");
+  var options = {showScores: false};
+  
+  const deferred = async function() {
+    stork.register("sitesearch", siteurl + "/search-index.st", options);
+    console.log("stork initialised");
+  };
+  
+  deferred();
+}
+
 export function statusAppend(str) {
   console.log(str);
   status.innerText = str + "\n" + status.innerText;
