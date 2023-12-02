@@ -10,7 +10,7 @@ echo "starting pelican"
 pelican
 
 echo "compute library size"
-du -hs ./runner | cut -d'.' -f1 > > ./docs/size.txt
+du -hs ./runner | cut -d'.' -f1 > ./docs/size.txt
 
 duration=$SECONDS
 echo "$(($duration / 60))m$(($duration % 60))s" > ./docs/elapsed.txt
