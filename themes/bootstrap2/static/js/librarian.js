@@ -1,5 +1,5 @@
 import { statusAppend, sanitiseKey, lowerize, isDoi, toBase64 } from './util.js';
-import { openGitHub } from './github.js';
+import { openGitHub, uploadFile } from './github.js';
 // import "./bibtexParse.js";
 
 //{toBibtex, toJSON}
@@ -75,7 +75,7 @@ function handleDrop(e) {
       fileName.endsWith(".azw3") ||
       fileName.endsWith(".jpg")   
       ) {
-      uploadFile(theFile);
+      uploadFile("librarian", theFile);
     }
     else {
       statusAppend("unsupported format: " + fileName);
@@ -240,53 +240,6 @@ async function getBib(articleUrl) {
 async function updateSearch() {
   console.log("stork update search: " + stork_input.value);
   getBib(stork_input.value);
-}
-
-async function uploadFile(theFile) {
-
-  console.log(theFile);
-  var fileName = theFile.name;
-
-  // if we are on an article page,
-  // dropping a file means "add this PDF to this entry"
-  if(document.getElementById('title_label') != null){
-
-    const articleUrl = document.getElementById('article_url');
-    console.log("file dropped on article page, url: " + articleUrl);
-
-    var fileContents = await toBase64(theFile);
-    fileContents = fileContents.slice(fileContents.indexOf(",") + 1);
-
-    var rootFolder = document.getElementById('article_rootfolder').getAttribute("href");
-    console.log("rootFolder: " + rootFolder);
-    var path = "library/entries/" + rootFolder.split("/").slice(-1) + "/";
-
-    var fileName = encodeURIComponent(fileName);
-    const putRequest = 'PUT /repos/lclem/librarian/contents/' + path + fileName;
-    statusAppend("put request: " + putRequest);
-
-    const result = await octokit.request(putRequest, {
-      accept: 'application/vnd.github+json',
-      owner: 'lclem',
-      repo: 'librarian',
-      path: fileName,
-      message: 'file upload',
-      committer: {
-        name: 'Lorenzo C',
-        email: 'clementelorenzo@gmail.com'
-      },
-      content: fileContents,
-      headers: {
-        'X-GitHub-Api-Version': '2022-11-28'
-      }
-    });
-
-    console.log(result.data);
-    window.open(rootFolder, "_blank");
-    
-    const commitUrl = result.data.commit.html_url;
-    statusAppend(commitUrl);
-  }
 }
 
 function detectPaste(event) {

@@ -27,3 +27,50 @@ export async function openGitHub(key, fileName, bibStr) {
 
   return url;
 }
+
+export async function uploadFile(repository, theFile) {
+
+  console.log(theFile);
+  var fileName = theFile.name;
+
+  // if we are on an article page,
+  // dropping a file means "add this PDF to this entry"
+  if(document.getElementById('title_label') != null){
+
+    const articleUrl = document.getElementById('article_url');
+    console.log("file dropped on article page, url: " + articleUrl);
+
+    var fileContents = await toBase64(theFile);
+    fileContents = fileContents.slice(fileContents.indexOf(",") + 1);
+
+    var rootFolder = document.getElementById('article_rootfolder').getAttribute("href");
+    console.log("rootFolder: " + rootFolder);
+    var path = "library/entries/" + rootFolder.split("/").slice(-1) + "/";
+
+    var fileName = encodeURIComponent(fileName);
+    const putRequest = 'PUT /repos/lclem/' + repository + '/contents/' + path + fileName;
+    statusAppend("put request: " + putRequest);
+
+    const result = await octokit.request(putRequest, {
+      accept: 'application/vnd.github+json',
+      owner: 'lclem',
+      repo: repository,
+      path: fileName,
+      message: 'file upload',
+      committer: {
+        name: 'Lorenzo C',
+        email: 'clementelorenzo@gmail.com'
+      },
+      content: fileContents,
+      headers: {
+        'X-GitHub-Api-Version': '2022-11-28'
+      }
+    });
+
+    console.log(result.data);
+    window.open(rootFolder, "_blank");
+    
+    const commitUrl = result.data.commit.html_url;
+    statusAppend(commitUrl);
+  }
+}

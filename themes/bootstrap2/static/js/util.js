@@ -71,3 +71,23 @@ export function sanitiseKey(key) {
   return newKey;
   
 }
+
+// get bib information given the doi
+async function doi2bib(doiUrl, callback) {
+
+  statusAppend("doi: " + doiUrl);
+
+  xmlhttp = getXmlHttp();
+  xmlhttp.onreadystatechange = async function() {
+    if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+      let res = xmlhttp.responseText;
+      console.log("doi2bib: " + res);
+      callback(res);
+    }
+  }
+
+  xmlhttp.open("GET", doiUrl, false);
+  xmlhttp.setRequestHeader('Accept', 'application/x-bibtex; charset=utf-8');
+  xmlhttp.send();
+  
+}
