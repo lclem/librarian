@@ -1,4 +1,5 @@
-import { statusAppend } from './util.js';
+import { statusAppend, sanitiseKey, lowerize, isDoi, toBase64 } from './util.js';
+import { openGitHub } from './github.js';
 // import "./bibtexParse.js";
 
 //{toBibtex, toJSON}
@@ -92,12 +93,6 @@ const copyBib = async () => {
   }
 }
 
-function isDoi(str) {
-    var rx = /^10\.[0-9][0-9][0-9][0-9][0-9]*\//;
-    var matches = rx.exec(str);
-    return matches !== null && matches.length > 0;
-}
-
 function triggerStorkSearch(str) {
   console.log('triggerStorkSearch: ' + str);
   stork_input.value = str;
@@ -112,43 +107,6 @@ function outFunc() {
 function confirmBib() {
   uploadBib(dt, true);
 }
-
-// TODO: improve
-function sanitiseKey(key) {
-
-  var newKey = key.replaceAll("/", "_");
-  newKey = newKey.replaceAll(":", "_");
-  console.log("sanitising key " + key + " --> " + newKey);
-
-  return newKey;
-  
-}
-
-// TODO: check that the key does not exist already in the repo
-async function openGitHub(key, fileName, bibStr) {
-
-  var sanitisedKey = sanitiseKey(key);
-  
-  // create filename from key if not present
-  if (fileName == "") {
-    fileName = sanitisedKey + ".bib";
-  }
-
-  var url = "https://github.com/lclem/librarian/new/main/library/entries/";
-  url += sanitisedKey + "?filename=" + fileName + "&value=";
-  url += encodeURIComponent(bibStr);
-
-  statusAppend("openGitHub, key:" + sanitisedKey + ", fileName: " + fileName + ", bibStr: " + bibStr + " = " + url);
-
-  window.open(url, "_blank");
-  addButton.style.display = "none";
-}
-
-const lowerize = obj =>
-  Object.keys(obj).reduce((acc, k) => {
-    acc[k.toLowerCase()] = obj[k];
-    return acc;
-  }, {});
 
 async function processBib(aBibStr, fileName, force = false) {
 
@@ -216,7 +174,10 @@ async function processBib(aBibStr, fileName, force = false) {
         bibStr = bibStr.trim();
         console.log(bibStr);
 
-        openGitHub(key, fileName, bibStr);
+        var url = openGitHub(key, fileName, bibStr);
+        window.open(url, "_blank");
+        addButton.style.display = "none";
+      
       }
     }
   } catch (err) {
@@ -252,43 +213,6 @@ async function uploadBib(bibFile, force = false) {
   }
 }
 
-function getXmlHttp() {
-  var xmlhttp;
-  if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
-      xmlhttp = new XMLHttpRequest();
-  }
-  else {// code for IE6, IE5
-      xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-  }
-  return xmlhttp;
-}
-
-// given a url fetch its contents and invoke the callback function on the result
-async function getWebPage(theUrl, callback) {
-
-  statusAppend("getting url: " + theUrl);
-
-  var xmlhttp = getXmlHttp();
-  xmlhttp.onreadystatechange = async function() {
-    if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-      let res = xmlhttp.responseText;
-      console.log("res: " + res);
-      callback(res);
-    }
-    else {
-      statusAppend("status: " + xmlhttp.status);
-    }
-  }
-
-  try {
-    xmlhttp.open("GET", theUrl, false);
-    xmlhttp.send();
-  } catch (err) {
-    statusAppend('GET error: ', err);
-  }
-
-}
-
 async function getBib(articleUrl) {
 
     articleUrl = articleUrl.trim();
@@ -317,13 +241,6 @@ async function updateSearch() {
   console.log("stork update search: " + stork_input.value);
   getBib(stork_input.value);
 }
-
-const toBase64 = file => new Promise((resolve, reject) => {
-  const reader = new FileReader();
-  reader.readAsDataURL(file);
-  reader.onload = () => resolve(reader.result);
-  reader.onerror = reject;
-});
 
 async function uploadFile(theFile) {
 
