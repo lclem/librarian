@@ -16,7 +16,7 @@ pip-log.txt
 
 .DS_Store
 ._*
-library/*.md
+library/entries/*/*.md
 docs
 __pycache__
 skim/
