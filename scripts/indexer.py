@@ -7,6 +7,8 @@ import string
 import subprocess
 import re
 
+from epub_thumbnailer import generate_cover
+
 @contextlib.contextmanager
 def pushd(new_dir):
     previous_dir = os.getcwd()
@@ -189,11 +191,11 @@ for root, dirs, files in os.walk("./library/entries"):
             print(f"CWD {os.getcwd()}")
             for _, _, files in os.walk("./"):
                 for file in files:
-                    if file.endswith(".bib"):
+                    if file.endswith(".bib") and not file.startswith("._"):
                         bibFile = file # os.path.join(root, file)
-                        # print(f"FILE {bibFile}")
+                        print(f"FILE {bibFile}")
 
-                        text_file = open(bibFile, "r")
+                        text_file = open(bibFile, "r", encoding='utf-8')
                         bibcontent = text_file.read().strip()
                         text_file.close()
 
@@ -222,18 +224,21 @@ for root, dirs, files in os.walk("./library/entries"):
 
                             pdfFiles = []
                             epubFiles = []
+                            epubFilesBase = []
                             djvuFiles = []
 
                             for attachment in os.listdir("./"):
-                                if attachment.endswith(".pdf"):
-                                    print(f"PDF {attachment}")
-                                    pdfFiles.append(os.path.join(cwd, attachment))
-                                elif attachment.endswith(".epub"):
-                                    print(f"EPUB {attachment}")
-                                    epubFiles.append(os.path.join(cwd, attachment))
-                                elif attachment.endswith(".djvu"):
-                                    print(f"DJVU {attachment}")
-                                    djvuFiles.append(os.path.join(cwd, attachment))
+                                if not attachment.startswith("._"):
+                                    if attachment.endswith(".pdf"):
+                                        print(f"PDF {attachment}")
+                                        pdfFiles.append(os.path.join(cwd, attachment))
+                                    elif attachment.endswith(".epub"):
+                                        print(f"EPUB {attachment}")
+                                        epubFiles.append(os.path.join(cwd, attachment))
+                                        epubFilesBase.append(attachment)
+                                    elif attachment.endswith(".djvu"):
+                                        print(f"DJVU {attachment}")
+                                        djvuFiles.append(os.path.join(cwd, attachment))
                                     
                             if len(pdfFiles) == 1:
                                     pdfFiles_str = f'Pdffile: {pdfFiles[0]}\n'
@@ -255,6 +260,18 @@ for root, dirs, files in os.walk("./library/entries"):
                                 djvuFiles_str = ""
                                 for djvuFile in djvuFiles:
                                     djvuFiles_str += f'Djvufiles: {djvuFile}\n'
+
+                            if not "cover.jpg" in os.listdir("./"):
+                                if len(epubFilesBase) > 0:
+                                    epubFile = epubFilesBase[0]
+                                    print(f"GEN EPUB COVER: {epubFile}")
+
+                                    try:
+                                        generate_cover(epubFile, "cover.jpg", 800)
+                                    except Exception as e:
+                                        print(f"EXCEPT: {e}")
+                            else:
+                                print(f"COVER: OK")
 
                             mdfile = os.path.join("", f"entry-{i}.md")
 
@@ -285,6 +302,9 @@ engine: knitr\n"
                             if not len(djvuFiles) == 0:
                                 markdown += djvuFiles_str
 
+                            if "cover.jpg" in os.listdir("./"):
+                                markdown += "\n![cover]({attach}cover.jpg)\n"
+
                             markdown += "\n"
                             markdown += f"\
     :::bibtex\n\
@@ -292,8 +312,8 @@ engine: knitr\n"
 \n\
 <bib id=\"bib\">\
 {bibcontent}\
-</bib>"
-
+</bib>\n"
+                            
                             text_file = open(mdfile, "w")
                             text_file.write(markdown)
                             text_file.close()

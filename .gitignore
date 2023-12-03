@@ -1,5 +1,4 @@
 output
-pelicanconf_local.py
 *.lst
 *.err
 *.log
