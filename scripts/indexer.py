@@ -189,7 +189,7 @@ for root, dirs, files in os.walk("./library/entries"):
     for dir in dirs:
         cwd = os.path.join(root, dir)
         with pushd(cwd):
-            print(f"CWD {os.getcwd()}")
+            print(f"CWD {dir} - {os.getcwd()}")
             for _, _, files in os.walk("./"):
                 for file in files:
                     if file.endswith(".bib") and not file.startswith("._"):
@@ -298,6 +298,7 @@ Mdfile: {os.path.join(cwd, mdfile)}\n\
 {'thedoiurl: ' + doi + NEWLINE if doi != '' else ''}\
 {'doi: ' + doiNoURL + NEWLINE if doiNoURL != '' else ''}\
 {'theurl: ' + url + NEWLINE if url != '' else ''}\
+{'cover: ' + os.path.join(dir, 'cover.jpg') + NEWLINE if 'cover.jpg' in os.listdir('./') else ''}\
 Key: {key}\n\
 Slug: {doiNoURL if doiNoURL != '' else key}\n\
 engine: knitr\n"

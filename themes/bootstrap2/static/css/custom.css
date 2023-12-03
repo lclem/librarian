@@ -281,3 +281,7 @@ background-color: aliceblue;
 footer {
 display: block;
 }
+
+.pagination {
+    text-align:center;
+}
