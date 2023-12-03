@@ -31,6 +31,9 @@ RUN sudo apt-get install -y python3-setuptools libtiff5-dev libjpeg8-dev libopen
 RUN python3 -m pip install --upgrade defusedxml olefile
 RUN pip3 install Pillow
 
+RUN sudo apt-get install -y ghostscript imagemagick
+RUN sudo sed -i '/disable ghostscript format types/,+6d' /etc/ImageMagick-6/policy.xml
+RUN sudo sed -i '/1GiB/c\<policy domain="resource" name="disk" value="8GiB"\/>' /etc/ImageMagick-6/policy.xml
 ENV PATH="${PATH}:/home/ubuntu/.local/bin:/home/ubuntu/.cargo/bin"
 
 # RUN sudo rm -rf /var/lib/apt/lists/* && rm -rf /tmp/*

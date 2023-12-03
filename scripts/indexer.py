@@ -6,6 +6,7 @@ import bibtexparser as parser
 import string
 import subprocess
 import re
+import distutils.spawn
 
 from epub_thumbnailer import generate_cover
 
@@ -223,6 +224,7 @@ for root, dirs, files in os.walk("./library/entries"):
                                 doiNoURL = remove_prefix(doiNoURL, "http://doi.org/")
 
                             pdfFiles = []
+                            pdfFilesBase = []
                             epubFiles = []
                             epubFilesBase = []
                             djvuFiles = []
@@ -232,6 +234,7 @@ for root, dirs, files in os.walk("./library/entries"):
                                     if attachment.endswith(".pdf"):
                                         print(f"PDF {attachment}")
                                         pdfFiles.append(os.path.join(cwd, attachment))
+                                        pdfFilesBase.append(attachment)
                                     elif attachment.endswith(".epub"):
                                         print(f"EPUB {attachment}")
                                         epubFiles.append(os.path.join(cwd, attachment))
@@ -265,13 +268,19 @@ for root, dirs, files in os.walk("./library/entries"):
                                 if len(epubFilesBase) > 0:
                                     epubFile = epubFilesBase[0]
                                     print(f"GEN EPUB COVER: {epubFile}")
-
                                     try:
                                         generate_cover(epubFile, "cover.jpg", 800)
                                     except Exception as e:
                                         print(f"EXCEPT: {e}")
-                            else:
-                                print(f"COVER: OK")
+                                elif len(pdfFilesBase) > 0 and distutils.spawn.find_executable("convert"):
+                                    pdfFile = pdfFilesBase[0]
+                                    # convert first page of PDF to cover
+                                    print(f"GEN EPUB COVER: {pdfFile}")
+                                    try:
+                                        params = ['convert', '-density', '600', f'{pdfFile}[0]', 'cover.jpg']
+                                        subprocess.check_call(params)
+                                    except Exception as e:
+                                        print(f"EXCEPT: {e}")
 
                             mdfile = os.path.join("", f"entry-{i}.md")
 
