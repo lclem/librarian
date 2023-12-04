@@ -264,7 +264,7 @@ for root, dirs, files in os.walk("./library/entries"):
                                 for djvuFile in djvuFiles:
                                     djvuFiles_str += f'Djvufiles: {djvuFile}\n'
 
-                            if not "cover.jpg" in os.listdir("./"):
+                            if False and not "cover.jpg" in os.listdir("./"):
                                 if len(epubFilesBase) > 0:
                                     epubFile = epubFilesBase[0]
                                     print(f"GEN EPUB COVER: {epubFile}")
