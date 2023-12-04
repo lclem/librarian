@@ -10,6 +10,14 @@ import distutils.spawn
 
 from epub_thumbnailer import generate_cover
 
+import argparse
+ 
+argparser = argparse.ArgumentParser(description="indexer", formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+argparser.add_argument("--build-covers", action="store_true", help="build book JPEG covers")
+args = argparser.parse_args()
+config = vars(args)
+print(config)
+
 @contextlib.contextmanager
 def pushd(new_dir):
     previous_dir = os.getcwd()
@@ -264,7 +272,7 @@ for root, dirs, files in os.walk("./library/entries"):
                                 for djvuFile in djvuFiles:
                                     djvuFiles_str += f'Djvufiles: {djvuFile}\n'
 
-                            if False and not "cover.jpg" in os.listdir("./"):
+                            if not "cover.jpg" in os.listdir("./") and args.build_covers:
                                 if len(epubFilesBase) > 0:
                                     epubFile = epubFilesBase[0]
                                     print(f"GEN EPUB COVER: {epubFile}")
@@ -277,7 +285,7 @@ for root, dirs, files in os.walk("./library/entries"):
                                     # convert first page of PDF to cover
                                     print(f"GEN EPUB COVER: {pdfFile}")
                                     try:
-                                        params = ['convert', '-density', '600', f'{pdfFile}[0]', 'cover.jpg']
+                                        params = ['convert', '-density', '300', '-quality', 'JPEG', '-resize', '600x800', f'{pdfFile}[0]', 'cover.jpg']
                                         subprocess.check_call(params)
                                     except Exception as e:
                                         print(f"EXCEPT: {e}")
