@@ -35,6 +35,15 @@ jobs:
         uses: actions/upload-pages-artifact@v2
         with:
           path: './docs'
+
+      - name: get commit message
+        run: |
+           echo ::set-env name=commitmsg::$(git log --format=%B -n 1 ${{ github.event.after }})
+
+      - name: Commit main repo
+        uses: stefanzweifel/git-auto-commit-action@v4.1.6
+        with:
+          commit_message: update main repo, commit message was "${{ env.commitmsg }}"
           
       - name: Deploy to GitHub Pages
         id: deployment
