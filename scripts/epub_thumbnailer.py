@@ -144,6 +144,9 @@ def generate_cover(input_file1, output_file1, size1):
     for strategy in extraction_strategies:
         try:
             cover_path = strategy(epub)
-            return extract_cover(cover_path)
+            if extract_cover(cover_path):
+                return True
         except Exception as ex:
             print("Error getting cover using %s: " % strategy.__name__, ex)
+
+    return False
