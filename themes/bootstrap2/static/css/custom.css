@@ -293,3 +293,55 @@ img {
     width: auto;
     height: auto;
 }
+
+.collapsible {
+    vertical-align: top;
+    height: auto !important;
+    font-family: Helvetica,sans-serif;
+    /* font-size: 20px; */
+    /* font-weight: bold; */
+    /* margin: 20px; */
+    /* padding: 20px; */
+    /* background-color: pink; */
+    /* width: 280px; */
+    /* border-radius: 10px; */
+  }
+  
+  .answer {
+    display:none;
+    /* font-family: Helvetica,sans-serif; */
+    /* font-size: 14px; */
+    /* font-weight: normal; */
+  }
+
+  /* .myhide {
+    display:inline;
+  } */
+  
+  .show {
+    display: none;
+    text-decoration: none;
+  }
+  
+  .myhide:target + .show {
+    display: inline;
+    text-decoration: none;
+  }
+  
+  .myhide:target {
+    display: none;
+    text-decoration: none;
+  }
+  
+  .myhide:target ~ .answer {
+    display: inline;
+    text-decoration: none;
+  
+  }
+  
+  @media print {
+    .myhide, .show {
+      display: none;
+    }
+  }
+  

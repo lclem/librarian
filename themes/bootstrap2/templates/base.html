@@ -84,11 +84,15 @@
               Library Size: {% include "size.txt" %}, Last Updated: {{ BUILD_TIME | strftime("%b %d, %Y, %H:%M:%S") }},
               Build Time: <a id="time_elapsed">N/A</a>
             </div>
-            <div id="status" class = "small">
+            <div class="collapsible">
+              <a href="#hide1" class="myhide" id="hide1">[show logs]</a>
+              <a href="#show1" class="show" id="show1">[hide logs]</a>
+              <div class="answer"><div id="status" class = "small"></div></div>
             </div>
           </p>      
         </div>
       </div>
+    </div>
 
   <div id="epub_area"></div>
 
