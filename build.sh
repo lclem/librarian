@@ -5,11 +5,11 @@ SECONDS=0
 echo "starting indexer"
 python3 ./scripts/indexer.py > /dev/null
 
+echo "compute library size"
+du -hs ./library | cut -d'.' -f1 > ./themes/bootstrap2/templates/size.txt
+
 echo "starting pelican"
 pelican
-
-echo "compute library size"
-du -hs ./library | cut -d'.' -f1 > ./docs/size.txt
 
 duration=$SECONDS
 echo "$(($duration / 60))m$(($duration % 60))s" > ./docs/elapsed.txt

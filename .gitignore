@@ -2,6 +2,7 @@ output
 *.lst
 *.err
 *.log
+size.txt
 
 books.bib
 books.bib.keys

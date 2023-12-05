@@ -1,4 +1,4 @@
-import { statusAppend, sanitiseKey, lowerize, isDoi, storkInit, getRandomInt } from './util.js';
+import { statusAppend, sanitiseKey, lowerize, isDoi, doi2bib, storkInit, getRandomInt, getWebPage } from './util.js';
 import { openGitHub, uploadFile } from './github.js';
 import './epub.js';
 
@@ -24,6 +24,14 @@ stork_input.addEventListener("paste", detectPaste, false);
 dropArea.addEventListener('drop', handleDrop, false)
 
 const target = document.querySelector("div.target");
+
+function load() {
+  getWebPage("elapsed.txt", (text) => {
+    document.getElementById("time_elapsed").innerHTML = text;
+  });
+}
+
+window.onLoad = load();
 
 function preventDefaults (e) {
   e.preventDefault()

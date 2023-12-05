@@ -93,7 +93,7 @@ export async function doi2bib(doiUrl, callback) {
 
   statusAppend("doi: " + doiUrl);
 
-  xmlhttp = getXmlHttp();
+  var xmlhttp = getXmlHttp();
   xmlhttp.onreadystatechange = async function() {
     if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
       let res = xmlhttp.responseText;
