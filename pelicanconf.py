@@ -85,7 +85,7 @@ ARTICLE_SAVE_AS = 'articles/{slug}/index.html'
 PAGE_URL = 'pages/{slug}/'
 PAGE_SAVE_AS = 'pages/{slug}/index.html'
 
-INDEX_SAVE_AS = 'all_articles.html'
+# INDEX_SAVE_AS = 'all_articles.html'
 
 # List of templates that are used directly to render content.
 # Typically direct templates are used to generate index pages for collections of content (e.g., category and tag index pages).
