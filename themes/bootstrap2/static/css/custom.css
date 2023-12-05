@@ -290,8 +290,8 @@ img {
     display: block;
     max-width:600px;
     max-height:800px;
-    width: auto;
-    height: auto;
+/*     width: auto;
+    height: auto; */
 }
 
 .collapsible {
