@@ -26,7 +26,7 @@ dropArea.addEventListener('drop', handleDrop, false)
 const target = document.querySelector("div.target");
 
 function load() {
-  getWebPage("elapsed.txt", (text) => {
+  getWebPage("/elapsed.txt", (text) => {
     document.getElementById("time_elapsed").innerHTML = text;
   });
 }
