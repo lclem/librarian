@@ -82,7 +82,7 @@
           <p>
             <div class="small">
               Library Size: {% include "size.txt" %} ({{ articles | length }} books), Last Updated: {{ BUILD_TIME | strftime("%b %d, %Y, %H:%M:%S") }},
-              Build Time: <a id="time_elapsed">N/A</a>
+              Build Time: <a id="time_elapsed" site_url="{{ SITEURL }}" >N/A</a>
             </div>
             <div class="collapsible">
               <a href="#hide1" class="myhide" id="hide1">[show logs]</a>
