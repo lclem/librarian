@@ -81,7 +81,7 @@
           {% endblock %}
           <p>
             <div class="small">
-              Library Size: {% include "size.txt" %}, Last Updated: {{ BUILD_TIME | strftime("%b %d, %Y, %H:%M:%S") }},
+              Library Size: {% include "size.txt" %} ({{ articles | length }} books), Last Updated: {{ BUILD_TIME | strftime("%b %d, %Y, %H:%M:%S") }},
               Build Time: <a id="time_elapsed">N/A</a>
             </div>
             <div class="collapsible">
