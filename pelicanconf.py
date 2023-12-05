@@ -93,4 +93,4 @@ PAGINATED_TEMPLATES = {'index': 20, 'home': 12, 'nopdf': None}
 # A mapping containing template pages that will be rendered with the blog entries.
 # If you want to generate custom pages besides your blog entries, you can point any Jinja2 template file with a path pointing to the file and the destination path for the generated file.
 # For instance, if you have a blog with three static pages — a list of books, your resume, and a contact page — you could have:
-TEMPLATE_PAGES = {'index.html': 'index.html', 'home.html': 'home.html', 'nopdf.html': 'nopdf.html', 'nocover.html': 'nocover.html', "authors.html": "authors.html", "authors_bad.html": "authors_bad.html"}
+TEMPLATE_PAGES = {'home.html': 'index.html', 'home.html': 'home.html', 'nopdf.html': 'nopdf.html', 'nocover.html': 'nocover.html', "authors.html": "authors.html", "authors_bad.html": "authors_bad.html"}
