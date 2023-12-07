@@ -1,4 +1,4 @@
-import { statusAppend, sanitiseKey, lowerize, isDoi, doi2bib, storkInit, getRandomInt, getWebPage } from './util.js';
+import { statusAppend, sanitiseKey, lowerize, isDoi, doi2bib, storkInit, getRandomInt, getWebPage, load_elapsed } from './util.js';
 import { openGitHub, uploadFile } from './github.js';
 import './epub.js';
 
@@ -25,16 +25,7 @@ dropArea.addEventListener('drop', handleDrop, false)
 
 const target = document.querySelector("div.target");
 
-function load() {
-  var elem = document.getElementById("time_elapsed");
-  var site_url = elem.getAttribute("site_url");
-  
-  getWebPage(site_url + "/elapsed.txt", (text) => {
-    elem.innerHTML = text;
-  });
-}
-
-window.onLoad = load();
+window.onLoad = load_elapsed();
 
 function preventDefaults (e) {
   e.preventDefault()
