@@ -56,7 +56,9 @@ FEED_ALL_RSS = 'feeds/all.rss.xml'
 MENUITEMS = [
         ('no pdf', STORK_INPUT_OPTIONS["url_prefix"] + '/nopdf.html'),
         ('bad author', STORK_INPUT_OPTIONS["url_prefix"] +'/authors_bad.html'),
-        ('no cover', STORK_INPUT_OPTIONS["url_prefix"] + '/nocover.html')]
+        ('no cover', STORK_INPUT_OPTIONS["url_prefix"] + '/nocover.html'),
+        ('add item', STORK_INPUT_OPTIONS["url_prefix"] + '/form.html')
+        ]
 
 SLUGIFY_SOURCE = "basename"
 DISPLAY_CATEGORIES_ON_MENU = False
@@ -96,4 +98,4 @@ PAGINATED_TEMPLATES = {'index': 20, 'home': 12, 'nopdf': None}
 # If you want to generate custom pages besides your blog entries, you can point any Jinja2 template file with a path pointing to the file and the destination path for the generated file.
 # For instance, if you have a blog with three static pages — a list of books, your resume, and a contact page — you could have:
 # putting things here destroys pagination
-TEMPLATE_PAGES = {'nopdf.html': 'nopdf.html', 'nocover.html': 'nocover.html', 'authors.html': 'authors.html', 'authors_bad.html': 'authors_bad.html'}
+TEMPLATE_PAGES = {'nopdf.html': 'nopdf.html', 'nocover.html': 'nocover.html', 'authors.html': 'authors.html', 'authors_bad.html': 'authors_bad.html', 'form.html': 'form.html'}
