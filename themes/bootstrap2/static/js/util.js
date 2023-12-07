@@ -107,3 +107,12 @@ export async function doi2bib(doiUrl, callback) {
   xmlhttp.send();
   
 }
+
+export function load_elapsed() {
+  var elem = document.getElementById("time_elapsed");
+  var site_url = elem.getAttribute("site_url");
+  
+  getWebPage(site_url + "/elapsed.txt", (text) => {
+    elem.innerHTML = text;
+  });
+}
