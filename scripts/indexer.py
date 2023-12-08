@@ -197,12 +197,12 @@ for root, dirs, files in os.walk("./library/entries"):
     for dir in dirs:
         cwd = os.path.join(root, dir)
         with pushd(cwd):
-            print(f"CWD {dir} - {os.getcwd()}")
+            print(f"CWD {dir} - {os.getcwd()}", end='\r')
             for _, _, files in os.walk("./"):
                 for file in files:
                     if file.endswith(".bib") and not file.startswith("._"):
                         bibFile = file # os.path.join(root, file)
-                        print(f"FILE {bibFile}")
+                        print(f"FILE {bibFile}", end='\r')
 
                         text_file = open(bibFile, "r", encoding='utf-8')
                         bibcontent = text_file.read().strip()
@@ -221,7 +221,7 @@ for root, dirs, files in os.walk("./library/entries"):
                         for bibEntry in parseResults:
 
                             entry, key, authors, title, year, volume, date_added, date_modified, doi, url = bibEntry
-                            print(f"BIB {authors} - {title}")
+                            print(f"BIB {authors} - {title}", end='\r')
 
                             doiNoURL = doi
 
@@ -240,15 +240,15 @@ for root, dirs, files in os.walk("./library/entries"):
                             for attachment in os.listdir("./"):
                                 if not attachment.startswith("._"):
                                     if attachment.endswith(".pdf"):
-                                        print(f"PDF {attachment}")
+                                        print(f"PDF {attachment}", end='\r')
                                         pdfFiles.append(os.path.join(cwd, attachment))
                                         pdfFilesBase.append(attachment)
                                     elif attachment.endswith(".epub"):
-                                        print(f"EPUB {attachment}")
+                                        print(f"EPUB {attachment}", end='\r')
                                         epubFiles.append(os.path.join(cwd, attachment))
                                         epubFilesBase.append(attachment)
                                     elif attachment.endswith(".djvu"):
-                                        print(f"DJVU {attachment}")
+                                        print(f"DJVU {attachment}", end='\r')
                                         djvuFiles.append(os.path.join(cwd, attachment))
                                     
                             if len(pdfFiles) == 1:
@@ -275,7 +275,7 @@ for root, dirs, files in os.walk("./library/entries"):
                             if not "cover.jpg" in os.listdir("./") and args.build_covers:
                                 if len(epubFilesBase) > 0:
                                     epubFile = epubFilesBase[0]
-                                    print(f"GEN EPUB COVER: {epubFile}")
+                                    print(f"GEN EPUB COVER: {epubFile}", end='\r')
                                     try:
                                         generate_cover(epubFile, "cover.jpg", 800)
                                     except Exception as e:
@@ -283,9 +283,9 @@ for root, dirs, files in os.walk("./library/entries"):
                                 elif len(pdfFilesBase) > 0 and distutils.spawn.find_executable("convert"):
                                     pdfFile = pdfFilesBase[0]
                                     # convert first page of PDF to cover
-                                    print(f"GEN EPUB COVER: {pdfFile}")
+                                    print(f"GEN EPUB COVER: {pdfFile}", end='\r')
                                     try:
-                                        params = ['convert', '-density', '300', '-quality', 'JPEG', '-resize', '600x800', f'{pdfFile}[0]', 'cover.jpg']
+                                        params = ['convert', '-density', '300', '-quality', '90', '-resize', '600x800', f'{pdfFile}[0]', 'cover.jpg']
                                         subprocess.check_call(params)
                                     except Exception as e:
                                         print(f"EXCEPT: {e}")
