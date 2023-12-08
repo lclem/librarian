@@ -13,6 +13,13 @@
                                                 <img src='{{ SITEURL }}/{{ article.url }}/cover.jpg' width="50%" height="100%" style="margin-left: 50px;">
                                         </div>
                                         {% endif %}
+					{% if article.authors %}
+				                {% for author in article.authors %}
+				                        <a href="{{ SITEURL }}/{{ author.url }}"><i class="icon-user"></i>{{ author }}</a>
+				                {% endfor %}
+				        {% elif article.author %}
+				                <a href="{{ SITEURL }}/{{ article.author.url }}"><i class="icon-user"></i>{{ article.author }}</a>
+				        {% endif %}, 
                                         <a href="{{ SITEURL }}/{{ article.url }}">{{ article.title }}</a>
                                 </td>                
                         {% endfor %}
