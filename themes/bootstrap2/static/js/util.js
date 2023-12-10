@@ -52,7 +52,7 @@ export function getXmlHttp() {
 }
 
 // given a url fetch its contents and invoke the callback function on the result
-export async function getWebPage(theUrl, callback) {
+export async function getWebPage(theUrl, callback, callback1 = null) {
 
   statusAppend("getting url: " + theUrl);
 
@@ -69,7 +69,14 @@ export async function getWebPage(theUrl, callback) {
   }
 
   try {
-    xmlhttp.open("GET", theUrl, false);
+    xmlhttp.open("GET", theUrl, true); // async behaviour
+    xmlhttp.onabort = callback1;
+    xmlhttp.onerror = callback1;
+    xmlhttp.onload = callback1;
+    xmlhttp.onloadend = callback1;
+    xmlhttp.onloadstart = callback1;
+    xmlhttp.onprogress = callback1;
+    xmlhttp.ontimeout = callback1;
     xmlhttp.send();
   } catch (err) {
     statusAppend('GET error: ', err);
