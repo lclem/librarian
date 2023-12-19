@@ -70,6 +70,13 @@ export async function getWebPage(theUrl, callback, callback1 = null) {
 
   try {
     xmlhttp.open("GET", theUrl, true); // async behaviour
+
+    // disable caching
+    xmlhttp.setRequestHeader("Cache-Control", "no-cache, no-store, max-age=0");
+    // fallbacks for IE and older browsers:
+    xmlhttp.setRequestHeader("Expires", "Tue, 01 Jan 1980 1:00:00 GMT");
+    xmlhttp.setRequestHeader("Pragma", "no-cache"); //required for Chrome
+    
     xmlhttp.onabort = callback1;
     xmlhttp.onerror = callback1;
     xmlhttp.onload = callback1;
