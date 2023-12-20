@@ -64,7 +64,7 @@ export async function getWebPage(theUrl, callback, callback1 = null) {
       callback(res);
     }
     else {
-      statusAppend("status: " + xmlhttp.status);
+      statusAppend(`status: ${xmlhttp.status}, readyState: ${xmlhttp.readyState}`);
     }
   }
 
