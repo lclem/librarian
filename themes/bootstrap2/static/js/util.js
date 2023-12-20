@@ -71,8 +71,13 @@ export async function getWebPage(theUrl, callback, callback1 = null) {
   try {
     xmlhttp.open("GET", theUrl, true); // async behaviour
 
+    // these headers seem to create problems with CORS
+    // Access to XMLHttpRequest at 'https://raw.githubusercontent.com/lclem/bibliographer/main//library/entries/Hollings_2009tk/Hollings:2009tk.bib'
+    // from origin 'https://lclem.github.io' has been blocked by CORS policy:
+    // Response to preflight request doesn't pass access control check: It does not have HTTP ok status.
+    
     // disable caching
-    xmlhttp.setRequestHeader("Cache-Control", "no-cache, no-store, max-age=0, must-revalidate");
+    // xmlhttp.setRequestHeader("Cache-Control", "no-cache, no-store, max-age=0, must-revalidate");
     // fallbacks for IE and older browsers:
     // xmlhttp.setRequestHeader("Expires", "Tue, 01 Jan 1980 1:00:00 GMT");
     // xmlhttp.setRequestHeader("Pragma", "no-cache"); //required for Chrome
