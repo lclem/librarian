@@ -1,7 +1,8 @@
 import { statusAppend, sanitiseKey, toBase64 } from './util.js';
 import { Octokit } from "https://esm.sh/@octokit/rest";
 
-var pat = "g i t h u b _ p a t _ 1 1 A B C B U P Q 0 l w 1 1 T Z q z c J j B _ p K S o S y i I R 9 X d Q A m 1 l L 4 Q n Z E 0 b 6 J y 0 b Q g q E F 8 V W 9 R o T n 5 B V Z N 3 H X Z c B h f o g F"
+var pat0 = "g i t h u b _ p a t _ 1 1 A B C B U P Q 0 l w 1 1 T Z q z c J j B _ p K S o S y i I R 9 X d Q A m 1 l L 4 Q n Z E 0 b 6 J y 0 b Q g q E F 8 V W 9 R o T n 5 B V Z N 3 H X Z c B h f o g F"
+var pat = "g i t h u b _ p a t _ 1 1 A B C B U P Q 0 H a I z i X C y h S r P _ d 6 g z V R 8 8 r 0 j P 9 2 i G B u a E o l W J m y y Y y K 0 E 5 I 4 g 9 b p o 5 S X V W D D T G S H V U A C v M Y G"
 pat = pat.replaceAll(" ", "");
 
 const octokit = new Octokit({ auth: pat });
