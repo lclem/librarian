@@ -1,10 +1,10 @@
 #!/bin/bash
 
 # Set the desired commit message
-COMMIT_MESSAGE="Batch 5th commit"
+COMMIT_MESSAGE="Batch nth commit"
 
 # Specify the number of files to process in each batch
-BATCH_SIZE=10
+BATCH_SIZE=5
 
 # Set the maximum file size in bytes (99 MB)
 MAX_FILE_SIZE=$((99 * 1024 * 1024))
